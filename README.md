@@ -14,7 +14,7 @@ steps:
 
 - uses: jonasge/elasticsearch-github-actions@1
   with:
-    stack-version: '8.2.0'
+    version: '8.2.0'
     plugins: 'ingest-attachment'
     http_proxy_host: 'http://example.com'
     http_proxy_port: '80'
