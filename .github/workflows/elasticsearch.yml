@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        elasticsearch: ["6.4.3", "7.6.2"]
+        elasticsearch: ["8.2.0"]
     steps:
       - name: Checkout
         uses: actions/checkout@v1
@@ -25,8 +25,7 @@ jobs:
         with:
           stack-version: ${{ matrix.elasticsearch }}
           plugins: |
-            analysis-kuromoji
-            analysis-icu
+            ingest-attachment
 
       - name: Elasticsearch is reachable
         run: |
