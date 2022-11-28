@@ -30,7 +30,7 @@ if [ "x${MAJOR_VERSION}" == 'x6' ]; then
     --env "cluster.name=docker-elasticsearch" \
     --env "cluster.routing.allocation.disk.threshold_enabled=false" \
     --env "bootstrap.memory_lock=true" \
-    --env "ES_JAVA_OPTS=-Xms1g -Xmx1g" \
+    --env "ES_JAVA_OPTS=-Xms1g -Xmx1g -Dhttp.proxyHost=${http_proxy_host} -Dhttp.proxyPort=${http_proxy_port} -Dhttps.proxyHost=${http_proxy_host} -Dhttps.proxyPort=${http_proxy_port}" \
     --env "xpack.security.enabled=false" \
     --env "xpack.license.self_generated.type=basic" \
     --ulimit nofile=65536:65536 \
@@ -51,7 +51,7 @@ elif [ "x${MAJOR_VERSION}" == 'x7' ]; then
     --env "discovery.seed_hosts=es1" \
     --env "cluster.routing.allocation.disk.threshold_enabled=false" \
     --env "bootstrap.memory_lock=true" \
-    --env "ES_JAVA_OPTS=-Xms1g -Xmx1g" \
+    --env "ES_JAVA_OPTS=-Xms1g -Xmx1g -Dhttp.proxyHost=${http_proxy_host} -Dhttp.proxyPort=${http_proxy_port} -Dhttps.proxyHost=${http_proxy_host} -Dhttps.proxyPort=${http_proxy_port}" \
     --env "xpack.security.enabled=false" \
     --env "xpack.license.self_generated.type=basic" \
     --ulimit nofile=65536:65536 \
@@ -63,6 +63,53 @@ elif [ "x${MAJOR_VERSION}" == 'x7' ]; then
     --entrypoint="" \
     docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION} \
     /bin/sh -vc "${PLUGIN_INSTALL_CMD} /usr/local/bin/docker-entrypoint.sh"
+elif [ "x${MAJOR_VERSION}" == 'x8' ]; then
+    if [ "${SECURITY_ENABLED}" == 'true' ]; then
+      elasticsearch_password=${elasticsearch_password-'changeme'}
+      docker run \
+        --rm \
+        --env "ELASTIC_PASSWORD=${elasticsearch_password}" \
+        --env "xpack.license.self_generated.type=basic" \
+        --env "node.name=es${node}" \
+        --env "cluster.name=docker-elasticsearch" \
+        --env "cluster.initial_master_nodes=es1" \
+        --env "discovery.seed_hosts=es1" \
+        --env "cluster.routing.allocation.disk.threshold_enabled=false" \
+        --env "bootstrap.memory_lock=true" \
+        --env "ES_JAVA_OPTS=-Xms1g -Xmx1g -Dhttp.proxyHost=${http_proxy_host} -Dhttp.proxyPort=${http_proxy_port} -Dhttps.proxyHost=${http_proxy_host} -Dhttps.proxyPort=${http_proxy_port}" \
+        --env "http.port=${port}" \
+        --env "action.destructive_requires_name=false" \
+        --ulimit nofile=65536:65536 \
+        --ulimit memlock=-1:-1 \
+        --publish "${port}:${port}" \
+        --network=elastic \
+        --name="es${node}" \
+        --detach \
+        -v /es/plugins/:/usr/share/elasticsearch/plugins/ \
+        docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION}
+    else
+      docker run \
+        --rm \
+        --env "xpack.security.enabled=false" \
+        --env "node.name=es${node}" \
+        --env "cluster.name=docker-elasticsearch" \
+        --env "cluster.initial_master_nodes=es1" \
+        --env "discovery.seed_hosts=es1" \
+        --env "cluster.routing.allocation.disk.threshold_enabled=false" \
+        --env "bootstrap.memory_lock=true" \
+        --env "ES_JAVA_OPTS=-Xms1g -Xmx1g -Dhttp.proxyHost=${http_proxy_host} -Dhttp.proxyPort=${http_proxy_port} -Dhttps.proxyHost=${http_proxy_host} -Dhttps.proxyPort=${http_proxy_port}" \
+        --env "xpack.license.self_generated.type=basic" \
+        --env "http.port=${port}" \
+        --env "action.destructive_requires_name=false" \
+        --ulimit nofile=65536:65536 \
+        --ulimit memlock=-1:-1 \
+        --publish "${port}:${port}" \
+        --network=elastic \
+        --name="es${node}" \
+        --detach \
+        -v /es/plugins/:/usr/share/elasticsearch/plugins/ \
+        docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION}
+    fi
 fi
 
 docker run \
