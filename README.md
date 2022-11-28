@@ -16,4 +16,8 @@ steps:
   with:
     stack-version: '8.2.0'
     plugins: 'ingest-attachment'
+    http_proxy_host: 'http://example.com'
+    http_proxy_port: '80'
+    https_proxy_host: 'https://example.com'
+    https_proxy_port: '443'
 ```
