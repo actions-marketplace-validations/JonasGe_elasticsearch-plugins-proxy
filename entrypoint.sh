@@ -51,7 +51,7 @@ elif [ "x${MAJOR_VERSION}" == 'x7' ]; then
     --env "discovery.seed_hosts=es1" \
     --env "cluster.routing.allocation.disk.threshold_enabled=false" \
     --env "bootstrap.memory_lock=true" \
-    --env "ES_JAVA_OPTS=-Xms1g -Xmx1g -Dhttp.proxyHost=${http_proxy_host} -Dhttp.proxyPort=${http_proxy_port} -Dhttps.proxyHost=${http_proxy_host} -Dhttps.proxyPort=${http_proxy_port}" \
+    --env "ES_JAVA_OPTS=-Xms1g -Xmx1g -Dhttp.proxyHost=${HTTP_PROXY_HOST} -Dhttp.proxyPort=${HTTP_PROXY_PORT} -Dhttps.proxyHost=${HTTPS_PROXY_HOST} -Dhttps.proxyPort=${HTTPS_PROXY_PORT}" \
     --env "xpack.security.enabled=false" \
     --env "xpack.license.self_generated.type=basic" \
     --ulimit nofile=65536:65536 \
@@ -76,7 +76,7 @@ elif [ "x${MAJOR_VERSION}" == 'x8' ]; then
         --env "discovery.seed_hosts=es1" \
         --env "cluster.routing.allocation.disk.threshold_enabled=false" \
         --env "bootstrap.memory_lock=true" \
-        --env "ES_JAVA_OPTS=-Xms1g -Xmx1g -Dhttp.proxyHost=${http_proxy_host} -Dhttp.proxyPort=${http_proxy_port} -Dhttps.proxyHost=${http_proxy_host} -Dhttps.proxyPort=${http_proxy_port}" \
+        --env "ES_JAVA_OPTS=-Xms1g -Xmx1g -Dhttp.proxyHost=${HTTP_PROXY_HOST} -Dhttp.proxyPort=${HTTP_PROXY_PORT} -Dhttps.proxyHost=${HTTPS_PROXY_HOST} -Dhttps.proxyPort=${HTTPS_PROXY_PORT}" \
         --env "http.port=${port}" \
         --env "action.destructive_requires_name=false" \
         --ulimit nofile=65536:65536 \
@@ -97,7 +97,7 @@ elif [ "x${MAJOR_VERSION}" == 'x8' ]; then
         --env "discovery.seed_hosts=es1" \
         --env "cluster.routing.allocation.disk.threshold_enabled=false" \
         --env "bootstrap.memory_lock=true" \
-        --env "ES_JAVA_OPTS=-Xms1g -Xmx1g -Dhttp.proxyHost=${http_proxy_host} -Dhttp.proxyPort=${http_proxy_port} -Dhttps.proxyHost=${http_proxy_host} -Dhttps.proxyPort=${http_proxy_port}" \
+        --env "ES_JAVA_OPTS=-Xms1g -Xmx1g -Dhttp.proxyHost=${HTTP_PROXY_HOST} -Dhttp.proxyPort=${HTTP_PROXY_PORT} -Dhttps.proxyHost=${HTTPS_PROXY_HOST} -Dhttps.proxyPort=${HTTPS_PROXY_PORT}" \
         --env "xpack.license.self_generated.type=basic" \
         --env "http.port=${port}" \
         --env "action.destructive_requires_name=false" \
