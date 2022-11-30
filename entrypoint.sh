@@ -30,7 +30,7 @@ if [ "x${MAJOR_VERSION}" == 'x6' ]; then
     --env "cluster.name=docker-elasticsearch" \
     --env "cluster.routing.allocation.disk.threshold_enabled=false" \
     --env "bootstrap.memory_lock=true" \
-    --env "ES_JAVA_OPTS=-Xms1g -Xmx1g -Dhttp.proxyHost=${http_proxy_host} -Dhttp.proxyPort=${http_proxy_port} -Dhttps.proxyHost=${http_proxy_host} -Dhttps.proxyPort=${http_proxy_port}" \
+    --env "ES_JAVA_OPTS=-Xms1g -Xmx1g -Dhttp.proxyHost=${HTTP_PROXY_HOST} -Dhttp.proxyPort=${HTTP_PROXY_PORT} -Dhttps.proxyHost=${HTTPS_PROXY_HOST} -Dhttps.proxyPort=${HTTPS_PROXY_PORT}" \
     --env "xpack.security.enabled=false" \
     --env "xpack.license.self_generated.type=basic" \
     --ulimit nofile=65536:65536 \
